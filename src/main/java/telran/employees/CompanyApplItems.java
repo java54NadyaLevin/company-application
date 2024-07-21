@@ -78,21 +78,21 @@ public class CompanyApplItems {
 	}
 
 	static void getEmployee(InputOutput io) {
-		if(checkCompanySize()) {
-		long id = getEmployeeId(io);
-		printEmployee(company.getEmployee(id), io);
-		}else {
+		if (checkCompanySize()) {
+			long id = getEmployeeId(io);
+			printEmployee(company.getEmployee(id), io);
+		} else {
 			io.writeLine("No employees registered");
 		}
 	}
 
 	private static boolean checkCompanySize() {
 		return company.iterator().hasNext();
-		
+
 	}
 
 	private static long getEmployeeId(InputOutput io) {
-		
+
 		HashSet<String> ids = new HashSet<>();
 		company.forEach(empl -> ids.add(Long.valueOf(empl.getId()).toString()));
 		long id = Long.valueOf(io.readStringOptions("Enter id value" + ids, "Wrong id value", ids));
@@ -123,14 +123,13 @@ public class CompanyApplItems {
 	}
 
 	static void removeEmployee(InputOutput io) {
-		if(checkCompanySize()) {
-		long id = getEmployeeId(io);
-		company.removeEmployee(id);
-		io.writeLine("Employee has been successfully removed");
-		}else {
+		if (checkCompanySize()) {
+			long id = getEmployeeId(io);
+			company.removeEmployee(id);
+			io.writeLine("Employee has been successfully removed");
+		} else {
 			io.writeLine("No employees to remove");
 		}
-	;
 	}
 
 	static void getDepartmentBudget(InputOutput io) {
@@ -140,8 +139,9 @@ public class CompanyApplItems {
 	}
 
 	static void getDepartments(InputOutput io) {
-		if (departments.size() > 0) {
-			io.writeLine(departments);
+		String[] departments = company.getDepartments();
+		if (departments.length != 0) {
+			Arrays.stream(company.getDepartments()).forEach(d -> io.writeLine(d));
 		} else {
 			io.writeLine("No departments registered");
 		}
@@ -149,10 +149,8 @@ public class CompanyApplItems {
 
 	static void getManagersWithMostFactor(InputOutput io) {
 		Manager[] managers = company.getManagersWithMostFactor();
-		if (managers != null) {
-			for (Manager manager : managers) {
-				io.writeLine(manager.getId());
-			}
+		if (managers.length != 0) {
+			Arrays.stream(managers).forEach(m -> io.writeLine(m.getId()));
 		} else {
 			io.writeLine("No managers registered");
 		}
